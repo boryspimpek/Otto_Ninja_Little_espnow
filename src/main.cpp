@@ -88,8 +88,8 @@ int mapJoystickToSpeed(int value) {
       return 90;  // Środek – zatrzymanie dla serwa 360°
   }
 
-  // Mapowanie nowego zakresu joysticka (-100 do 100) na zakres serwa (0 do 180)
-  int mappedSpeed = map(value, -100, 100, 0, 180);
+  // Mapowanie zakresu joysticka na zakres serwa 360 
+  int mappedSpeed = map(value, -1000, 1000, 60, 120);
   return mappedSpeed;
 }
 
@@ -222,17 +222,17 @@ void onDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len) {
     wasL1Pressed = false;
   }
 
-  // L4 button handling 
-  if (receivedData.L4Pressed) {
-    if (!wasL4Pressed) {
+  // L2 button handling 
+  if (receivedData.L2Pressed) {
+    if (!wasL2Pressed) {
       manualOverride = true;
       moonWalk();
-      wasL4Pressed = true;
+      wasL2Pressed = true;
     }
-  } else if (wasL4Pressed) {
+  } else if (wasL2Pressed) {
     returnToNeutral();  // Powrót do neutralnej pozycji po zakończeniu ruchów
     manualOverride = false; // Odblokowanie joysticka
-    wasL4Pressed = false;
+    wasL2Pressed = false;
   }
 
     // L3 button handling 
